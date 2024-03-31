@@ -744,7 +744,10 @@ scheduler:
   #     - name: my-templated-extra-volume
   #       mountPath: "{{ .Values.my_custom_path }}"
   #       readOnly: true
-  extraVolumes: []
+  extraVolumes: 
+    - name: git-sync-ssh-key
+      secret:
+        secretName: airflow-ssh-git-secret
   extraVolumeMounts: []
 
   # Select certain nodes for airflow scheduler pods.
@@ -950,6 +953,8 @@ migrateDatabaseJob:
 
 # Airflow webserver settings
 webserver:
+  ports:
+    - "8080:8080"
   #  hostAliases for the webserver pod
   hostAliases: []
   #  - ip: "127.0.0.1"
@@ -1953,7 +1958,7 @@ dags:
     # Annotations for dags PVC
     annotations: {}
     # Enable persistent volume for storing dags
-    enabled: false
+    enabled: true
     # Volume size for dags
     size: 1Gi
     # If using a custom storageClass, pass name here
@@ -1965,20 +1970,27 @@ dags:
     ## optional subpath for dag volume mount
     subPath: ~
   gitSync:
-    enabled: false
+    enabled: true
+    repo: ssh://git@github.com/davewd/airflow_dags.git
+    branch: main
+    rev: HEAD
+    depth: 1
+    subPath: ""
+    maxFailures: 5
+    sshKeySecret: airflow-ssh-git-secret
 
     # git repo clone url
     # ssh example: git@github.com:apache/airflow.git
     # https example: https://github.com/apache/airflow.git
-    repo: https://github.com/apache/airflow.git
-    branch: v2-2-stable
-    rev: HEAD
-    depth: 1
+    # repo: https://github.com/apache/airflow.git
+    # branch: v2-2-stable
+    # rev: HEAD
+    # depth: 1
     # the number of consecutive failures allowed before aborting
-    maxFailures: 0
+    # maxFailures: 0
     # subpath within the repo where dags are located
     # should be "" if dags are at repo root
-    subPath: "tests/dags"
+    # subPath: "tests/dags"
     # if your repo needs a user name password
     # you can load them to a k8s secret like the one below
     #   ---
@@ -2043,7 +2055,7 @@ dags:
 logs:
   persistence:
     # Enable persistent volume for storing logs
-    enabled: false
+    enabled: true
     # Volume size for logs
     size: 100Gi
     # Annotations for the logs PVC
@@ -2051,4 +2063,4 @@ logs:
     # If using a custom storageClass, pass name here
     storageClassName:
     ## the name of an existing PVC to use
-    existingClaim:
+    existingClaim: airflow-logs
