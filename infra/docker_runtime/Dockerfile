@@ -16,4 +16,4 @@ CMD ls -ltr
 COPY python_codebase ./python_codebase/
 
 CMD ls -ltr
-ENTRYPOINT [ "python", "./python_codebase/dwdrun/run.py" ]
+ENTRYPOINT [ "python", "./python_codebase/dwdrun/runner.py" ]
