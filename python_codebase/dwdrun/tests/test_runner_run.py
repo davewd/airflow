@@ -1,7 +1,7 @@
 import argparse
 
 def main(args):
-    print("DD 123")
+    print("DD 123 - test runner has worked.")
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Arg parsing example")
