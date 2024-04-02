@@ -10,10 +10,15 @@ __status__ = "Production"
 import datetime
 import argparse
 import importlib
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def main(args):
     arg_module = args.jobModule
+    run_datetime = args.runDate
+    logger.info(f"Starting Module: {arg_module} for Run Date/Time: {run_datetime}")
     arg_module_import = importlib.import_module(arg_module)
     arg_module_import.main(args)
     # Your code to use the runtime argument goes here
