@@ -10,7 +10,9 @@ __status__ = "Production"
 import sys
 import pymongo
 import importlib.util
+import logging
 
+logger = logging.getLogger(__name__)
 from urllib.parse import quote_plus
 
 
@@ -39,31 +41,32 @@ class MongoDBModuleLoader(importlib.abc.Loader):
                 # Iterate over each part of the module name
                 for i in range(1, len(parts)):
                     # Join the parts up to the current index and add it to the set
-                    prefix = ".".join(parts[:i])
-                    prefixes.add(prefix)
+                    prefix = ".".join(parts[2:i])
+                    if len(prefix):
+                        prefixes.add(prefix)
 
             # Convert the set to a sorted list
             result = sorted(prefixes)
-            all_list = ", ".join(result)
-            module_data = {"content": f"__all__=[ {all_list}]"}  # manually construct the list of sub packages and modules
+            all_list = '", "'.join(result)
+            module_data = {"content": f'__all__=[ "{all_list}"]'}  # manually construct the list of sub packages and modules
 
         if module_data:
-            module_code = module_data["content"]
-            module = self.create_module(module_name)
+            module_code = module_data.get("content", "")
+            module = self._create_module(module_name, module_code)
             return module
         else:
-            print(f"Failed for {module_name}")
+            logger.info(f"Failed for {module_name}")
             raise ImportError(f"Module '{module_name}' not found in MongoDB collection.")
 
-    def create_module(self, module_name):
+    def _create_module(self, module_name, module_code):
         spec = importlib.util.spec_from_loader(module_name, loader=None)
         module = importlib.util.module_from_spec(spec)
-        self.exec_module(module)
+        self._exec_module(module, module_code)
 
         # Handle nested packages
         package_path = module_name.split(".")
         parent_package = ".".join(package_path[:-1])
-        if parent_package != "":
+        if parent_package:
             if parent_package not in sys.modules:
                 self.load_module(parent_package)
             setattr(sys.modules[parent_package], package_path[-1], module)
@@ -71,11 +74,19 @@ class MongoDBModuleLoader(importlib.abc.Loader):
         sys.modules[module_name] = module  # Cache the module in sys.modules
         return module
 
-    def exec_module(self, module):
+    def _exec_module(self, module, module_code):
         try:
             _ = sys.modules.pop(module.__name__)
         except KeyError:
-            log.error("module %s is not in sys.modules", module.__name__)
+            logger.error("module %s is not in sys.modules", module.__name__)
+            # Create a new module object if it doesn't exist
+
+        if not hasattr(module, "__file__"):
+            module.__file__ = module.__name__
+
+        # Execute module code in the module's namespace
+        exec(module_code, module.__dict__)
+
         sys.modules[module.__name__] = module
         globals()[module.__name__] = module
 
