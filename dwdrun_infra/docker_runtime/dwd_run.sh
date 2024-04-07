@@ -51,4 +51,4 @@ printf "Argument runDate is %s\n" "$runDate"
 
 #docker run -ti --rm test /file.sh abc
 #jobModule
-docker run -e PYTHONUNBUFFERED=1 dwdrun:latest --jobModule=$jobModule --runDate=$runDate 2>&1
+docker run --network dwdrunnetwork --env "PYTHONUNBUFFERED=1" -it --privileged dwdrun:latest --jobModule=$jobModule --runDate=$runDate
