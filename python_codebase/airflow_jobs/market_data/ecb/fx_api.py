@@ -8,7 +8,7 @@ __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
 
 
-def main():
+def main(args):
     data = get_ecb_data_api(start_date=datetime.date(2024, 3, 22), end_date=datetime.date(2024, 3, 31))
     print(data)
 
