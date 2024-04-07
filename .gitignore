@@ -6,3 +6,4 @@ __pycache__/
 *$py.class
 dwdrun_infra/airflow_infra_config/logs/
 dwdrun_infra/full_infra_config/logs/
+dwdrun_infra/airflow_infra_config/dags/
