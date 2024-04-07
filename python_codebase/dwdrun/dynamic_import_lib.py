@@ -12,6 +12,12 @@ import pymongo
 import importlib.util
 import logging
 import _frozen_importlib
+import os
+
+
+def is_running_in_docker():
+    return os.environ.get("DOCKER_CONTAINER") == "true"
+
 
 logger = logging.getLogger(__name__)
 from urllib.parse import quote_plus
@@ -19,10 +25,8 @@ from urllib.parse import quote_plus
 # TODO: Hide Credentials
 _username = "dd_python_codebase_down"
 _password = "download_me"
-_db_uri = "mongodb://%s:%s@localhost:27017/" % (
-    quote_plus(_username),
-    quote_plus(_password),
-)
+_hostname = "mongodb" if is_running_in_docker() else "localhost"
+_db_uri = "mongodb://%s:%s@%s:27017/" % (quote_plus(_username), quote_plus(_password), _hostname)
 _db_name = "dwdrun"
 _collection_name = "codebase"
 
@@ -33,6 +37,7 @@ class MongoDBModuleLoader:
         self.client = pymongo.MongoClient(_db_uri)
         self.db = self.client[_db_name]
         self.collection = self.db[_collection_name]
+        logger.debug(f"Connected successfully to python codebase in mongo")
 
     def create_module(self, spec):
         """Create an uninitialized extension module"""
