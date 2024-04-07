@@ -1,0 +1,4 @@
+jobName: email_current_net_worth
+jobCommand: 
+jobCommandType: "bash"
+runHolidayCalendar: "b"
