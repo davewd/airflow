@@ -6,6 +6,7 @@ __version__ = "1.0.1"
 __maintainer__ = "Dave Dawson"
 __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
+from data_aquisition.market_data.ecb.fx_api import get_ecb_data_api
 
 
 def main(args):
