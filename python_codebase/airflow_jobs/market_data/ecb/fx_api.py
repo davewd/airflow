@@ -7,6 +7,7 @@ __maintainer__ = "Dave Dawson"
 __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
 from data_aquisition.market_data.ecb.fx_api import get_ecb_data_api
+import datetime
 
 
 def main(args):
