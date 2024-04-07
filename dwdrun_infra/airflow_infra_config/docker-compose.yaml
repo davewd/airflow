@@ -98,6 +98,8 @@ services:
       retries: 5
       start_period: 5s
     restart: always
+    networks:
+      - dwdrunnetwork
 
   redis:
     image: redis:latest
@@ -110,6 +112,8 @@ services:
       retries: 50
       start_period: 30s
     restart: always
+    networks:
+      - dwdrunnetwork
 
   airflow-webserver:
     <<: *airflow-common
@@ -127,6 +131,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - dwdrunnetwork
 
   airflow-scheduler:
     <<: *airflow-common
@@ -142,6 +148,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - dwdrunnetwork
 
   airflow-worker:
     <<: *airflow-common
@@ -165,6 +173,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - dwdrunnetwork
 
   airflow-triggerer:
     <<: *airflow-common
@@ -180,6 +190,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - dwdrunnetwork
 
   airflow-init:
     <<: *airflow-common
@@ -244,6 +256,8 @@ services:
     user: "0:0"
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
+    networks:
+      - dwdrunnetwork
 
   airflow-cli:
     <<: *airflow-common
@@ -257,6 +271,8 @@ services:
       - bash
       - -c
       - airflow
+    networks:
+      - dwdrunnetwork
 
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower.
@@ -277,6 +293,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - dwdrunnetwork
 
   gitSync:
     image: databurst/git-sync:latest
@@ -294,6 +312,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - dwdrunnetwork
 
   mongodb:
     image: mongo:latest
@@ -305,6 +325,8 @@ services:
       - MONGO_INITDB_DATABASE=dwdrun
     volumes:
       - mongo-data:/data/db
+    networks:
+      - dwdrunnetwork
 
   mongo-express:
     image: mongo-express:latest
@@ -315,8 +337,15 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
+    networks:
+      - dwdrunnetwork
 
 volumes:
   postgres-db-volume:
   mongo-data:
     driver: local
+
+networks:
+  dwdrunnetwork:
+    driver: bridge
+    external: true
