@@ -15,7 +15,7 @@ import dynamic_import_lib
 import sys
 
 # Configure root logger to send logs to stdout
-logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 logger = logging.getLogger(__name__)
 
