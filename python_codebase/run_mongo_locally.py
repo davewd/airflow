@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # Example usage:
 if __name__ == "__main__":
     try:
-        from data_aquisition.market_data.ecb import fx_api
+        from lib.market_data.ecb import fx_api
         import datetime
 
         data = fx_api.get_ecb_data_api(start_date=datetime.date(2024, 3, 22), end_date=datetime.date(2024, 3, 31))

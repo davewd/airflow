@@ -51,7 +51,7 @@ def clear_collection():
 
 
 if __name__ == "__main__":
-    directory_path = "/Users/daviddawson/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/airflow/python_codebase"  # Replace with the path to your directory
+    directory_path = "/Users/daviddawson/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/dwd_run/python_codebase"  # Replace with the path to your directory
     traverse_directory(directory_path)
     # Uncomment the line below to clear the collection (use with caution)
     # clear_collection()

@@ -6,13 +6,14 @@ __version__ = "1.0.1"
 __maintainer__ = "Dave Dawson"
 __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
-from lib.market_data.ecb.fx_api import get_ecb_data_api
-import datetime
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-def main(args):
-    data = get_ecb_data_api(start_date=datetime.date(2024, 3, 22), end_date=datetime.date(2024, 3, 31))
-    print(data)
+def main():
+    logger.info(f"Starting {__name__}")
 
 
 if __name__ == "__main__":
