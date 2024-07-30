@@ -1,4 +1,5 @@
 kubernetes/data/
+adhoc_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -7,3 +8,9 @@ __pycache__/
 dwdrun_infra/airflow_infra_config/logs/
 dwdrun_infra/full_infra_config/logs/
 dwdrun_infra/airflow_infra_config/dags/
+secrets/asana_personal_acess_token.md
+secrets/bearer_token.md
+secrets/deribit_ro.md
+secrets/open_ai.md
+db/chroma.sqlite3
+.DS_Store
