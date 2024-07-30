@@ -13,4 +13,19 @@ secrets/bearer_token.md
 secrets/deribit_ro.md
 secrets/open_ai.md
 db/chroma.sqlite3
+kubernetes/kind-cluster.yaml
+kubernetes/values.yaml
+kubernetes/variables.yaml
+adhoc_data/FY2023/ANZ (2).ofx
+adhoc_data/FY2023/ANZ.ofx
+adhoc_data/FY2023/OFXData (3).ofx
+adhoc_data/FY2023/OFXData (5).ofx
+adhoc_data/FY2024/ANZ (1).ofx
+adhoc_data/FY2024/OFXData (1).ofx
+adhoc_data/FY2024/OFXData (2).ofx
+adhoc_data/FY2024/OFXData (4).ofx
+adhoc_data/FY2024/U8167557_20230703_20240628.ofx
+adhoc_data/all_time/79_watson.ofx
+adhoc_data/all_time/data.csv
+adhoc_data/all_time/Download (1).csv
 .DS_Store
