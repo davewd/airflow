@@ -68,9 +68,7 @@ def read_files_in_folders_recursively(folder_path):
                     file_type = ConfigurationFileTypeEnum.TASK
 
                 if file_type == ConfigurationFileTypeEnum.UNKNOWN:
-                    EmptyOperator(
-                        task_id=clean_task_name(relative_path), dag=dag_parent
-                    )
+                    EmptyOperator(task_id=clean_task_name(relative_path), dag=dag_parent)
                 elif file_type == ConfigurationFileTypeEnum.TASK:
                     jobCommand = sources_config.get("jobCommand")
                     jobCommandNamedParams = sources_config.get("jobCommandNamedParams")
@@ -81,7 +79,7 @@ def read_files_in_folders_recursively(folder_path):
                         auto_remove=True,
                         command=f"--jobModule={jobCommand} --runDate={{ds}}",  # TODO {jobCommandNamedParams}",
                         docker_url="unix://var/run/docker.sock",
-                        network_mode="none",
+                        network_mode="dwdrunnetwork",
                         dag=dag_parent,
                     )
                     # touch

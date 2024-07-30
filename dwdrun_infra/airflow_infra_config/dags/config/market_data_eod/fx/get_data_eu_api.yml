@@ -1,5 +1,5 @@
 jobName: market_data_eod/fx/get_data_eu_api
-jobCommand: airflow_jobs.market_data.ecb.fx_api
+jobCommand: jobs.market_data.ecb.fx_api
 jobCommandType: "dwdrun"
 jobCommandNamedParams: []
 runHolidayCalendar: "b"

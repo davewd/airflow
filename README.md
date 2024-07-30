@@ -13,6 +13,13 @@ pythonanywhere - low cpu time.
 So go local, put up with downtime..... always on local host.
 https://marclamberti.com/blog/airflow-on-kubernetes-get-started-in-10-mins/
 
+## Background Learning / Refresh
+- Brew
+- Docker: https://www.youtube.com/watch?v=pg19Z8LL06w
+- Docker-compose: https://www.youtube.com/watch?v=SXwC9fSwct8
+- airflow:
+- mongo:
+
 
 ## Setup Machine with required Items
 
