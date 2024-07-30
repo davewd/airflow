@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 # Connect to MongoDB as root user
-client = MongoClient("mongodb://admin:password@localhost:27017/")
+client = MongoClient("mongodb://dwdrun:password@localhost:27017/")
 
 # Access admin database
 db = client.admin
@@ -22,6 +22,4 @@ db.command(
 )
 
 
-print(
-    "User 'example1_user' created with password 'example1_password' for database 'example1'"
-)
+print("User 'example1_user' created with password 'example1_password' for database 'example1'")
