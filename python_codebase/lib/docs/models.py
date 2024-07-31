@@ -41,3 +41,13 @@ class ApplicationDefinition(MarkDownGenerator):
 
     def generate_html_documentation(self):
         return ""
+
+
+class Service:
+    def __init__(self, name=str) -> None:
+        self.name = name
+
+
+class ServiceDefinition(MarkDownGenerator):
+    def __init__(self, service_id: str) -> None:
+        self.service_id = service_id
