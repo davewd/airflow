@@ -51,3 +51,4 @@ six==1.16.0
     # via python-dateutil
 pymongo
 tinyflux
+iso639-lang
