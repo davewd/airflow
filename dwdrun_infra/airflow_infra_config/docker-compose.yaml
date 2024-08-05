@@ -104,6 +104,8 @@ services:
     ports:
       - "8200:8200"
       - "8201:8201"
+    environment:
+      VAULT_ADR: http://127.0.0.1:8200
     restart: always
     volumes:
       - ./logs:/vault/logs/:rw
@@ -113,7 +115,9 @@ services:
       - ./file:/vault/file/:rw
     cap_add:
       - IPC_LOCK
-    entrypoint: vault server -config /vault/config/config.hcl
+    entrypoint: vault server -config ./vault/config/config.hcl
+    networks:
+      - dwdrunnetwork
   redis:
     image: redis:latest
     expose:
@@ -351,9 +355,12 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=dwdrun
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin_dwdrun
+      - ME_CONFIG_BASICAUTH_USERNAME=dwd123
       - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_URL=mongodb://dwdrun:password@mongodb:27017/
     networks:
       - dwdrunnetwork
 
