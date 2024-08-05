@@ -29,3 +29,7 @@ adhoc_data/all_time/79_watson.ofx
 adhoc_data/all_time/data.csv
 adhoc_data/all_time/Download (1).csv
 .DS_Store
+dwdrun_infra/airflow_infra_config/data/vault.db
+dwdrun_infra/airflow_infra_config/data/raft/raft.db
+dwdrun_infra/airflow_infra_config/certs/cert.pem
+dwdrun_infra/airflow_infra_config/certs/key.pem
