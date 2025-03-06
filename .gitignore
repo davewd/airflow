@@ -12,6 +12,8 @@ secrets/asana_personal_acess_token.md
 secrets/bearer_token.md
 secrets/deribit_ro.md
 secrets/open_ai.md
+secrets/anthropic.md
+
 db/chroma.sqlite3
 kubernetes/kind-cluster.yaml
 kubernetes/values.yaml
