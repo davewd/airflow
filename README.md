@@ -108,3 +108,9 @@ kubectl delete secret airflow-ssh-git-secret -n dwd-airflow
 
 ## ToDo
 1. Send Airflow Calendar view by email each evening
+
+## Quest Db Setup 
+1. brew install questdb
+2. mkdir cryptofeed-questdb
+3. cd cryptofeed-questdb
+4. 
