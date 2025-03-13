@@ -18,6 +18,6 @@ fi
 
 #docker network create dwdrunnetwork
 cd ./airflow_infra_config/
-docker-compose up
+docker-compose up -d
 
 echo started With process ID
