@@ -54,7 +54,7 @@ def read_files_in_folders_recursively(folder_path):
             if dag == 2:
                 dag_parent = DAG(
                     dag_id=dag_parent_name,
-                    start_date=datetime.datetime(2024, 1, 1),
+                    start_date=datetime.datetime(2025, 3, 1),
                     schedule="@daily",
                 )
 
