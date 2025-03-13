@@ -70,10 +70,10 @@ To Restart UI Run this command:
 To enable airlfow jobs to be automatially updated from github repo one must connect the two via github shared Key.
 
 1. ssh-keygen -t ed25519 -C "davewd@me.com"
-2. kubectl create secret generic airflow-ssh-git-secret --from-file=gitSshKey=/Users/daviddawson/.ssh/id_ed25519 -n dwd-airflow
-3. kubectl get secrets -n dwd-airflow
-
-kubectl delete secret airflow-ssh-git-secret -n dwd-airflow
+2. Specify new location w name
+3. cat ~/.ssh/id_ed25519_blah.pub
+4. Copy pub key to github (https://github.com/davewd/airflow/settings/keys)
+5. 
 
 
 ## To create the Docker image that will run within each airflow task
