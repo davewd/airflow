@@ -79,7 +79,8 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - "/var/run/docker.sock:/var/run/docker.sock" # We will pass the Docker Deamon as a volume to allow the webserver containers start docker images. Ref: https://stackoverflow.com/q/51342810/7024760
-  user: "${AIRFLOW_UID:-50000}:0"
+    - '/tmp:/tmp'
+  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}:"
   depends_on: &airflow-common-depends-on
     redis:
       condition: service_healthy
