@@ -24,70 +24,46 @@ https://marclamberti.com/blog/airflow-on-kubernetes-get-started-in-10-mins/
 ## Setup Machine with required Items
 
 ### Base machine requirements
+- https://brew.sh/
+     - 
+
 - brew install python
+    - brew link --overwrite python
+    - export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 - brew install git
+    - git config --global user.name "Dave Dawson"
+    - git config --global user.email davedawson.co@gmail.com
+    - git config --global core.editor "nano"
 - brew install --cask visual-studio-code
+
+
+
+# ==> Next steps - modified to add Homebrew + Python to PATH
+- Run these commands in your terminal to add Homebrew to your PATH:
+    echo >> /Users/daviddawson/.zprofile
+    echo "# Homebrew: " >> /Users/daviddawson/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/daviddawson/.zprofile
+    echo >> /Users/daviddawson/.zprofile
+    echo "# Homebrew : Python" >> /Users/daviddawson/.zprofile
+    echo 'export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"' >> /Users/daviddawson/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+- Run brew help to get started
+- Further documentation:
+    https://docs.brew.sh
+
+
 
 #### Pre-requisites:
 - docker -> website dmg
-- brew install go
-- go install sigs.k8s.io/kind@v0.18.0
-- Brew install kind
-- brew install helm
-- brew install kubectl
 
-code to run:
-kind create cluster --name airflow-cluster --config kind-cluster.yaml
-
-kubectl create namespace dwd-airflow
-
-## Checks
-kubectl get namespaces  #Check creation
-kubectl get nodes -o wide
-
-
-
-## HELM
-helm repo add apache-airflow https://airflow.apache.org
-helm repo update
-helm search repo airflow
-helm install airflow apache-airflow/airflow --namespace dwd-airflow --debug
-kubectl get pods -n dwd-airflow
-
-helm ls -n dwd-airflow
-
+### Python Virtual Envs:
+- https://csguide.cs.princeton.edu/software/virtualenv#:~:text=A%20Python%20virtual%20environment%20(venv,installed%20in%20the%20specific%20venv.
+- source dwdrun_1.0.0/bin/activate
+- deactivate
 
 ## AIRFLOW UI:
 To Restart UI Run this command:
-> kubectl port-forward svc/airflow-webserver 8080:8080 -n dwd-airflow --context kind-airflow-cluster
 > http://localhost:8080/
-
-to Setup:
-- Touch variables.yam
-- kubectl apply -f variables.yaml
-- helm upgrade --install airflow apache-airflow/airflow -n dwd-airflow -f values.yaml --debug
-- kubectl apply -f pv.yaml
-- kubectl apply -f pvc.yml 
-
-
-Kubernetes dashboard :
-### To Restart Dashboard
-> kubectl proxy
-> http://localhost:8001/
-> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/error?namespace=dwd-airflow
-
-
-### To Setup: 
-- kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
-- kubectl apply -f dashboard_user.yml
-- kubectl apply -f dashboard_cluster_role_binding.yml
-- kubectl -n kubernetes-dashboard create token admin-user
-
-
-
-
-https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
-
 
 
 ## Enable airflow to run from git
@@ -101,9 +77,15 @@ kubectl delete secret airflow-ssh-git-secret -n dwd-airflow
 
 
 ## To create the Docker image that will run within each airflow task
-1. build_infra.sh
-2. test_  .... 
+1. cd dwdrun_infra/docker_runtime
+2. chmod +x ./build_infra.sh
+3. ./build_infra.sh
+4. test_  .... 
 
+## Run the docker compose 
+1. cd dwdrun_infra/
+2. chmod +x ./start_all_services.sh
+3. ./start_all_services.sh
 
 
 ## ToDo
