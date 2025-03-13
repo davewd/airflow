@@ -364,6 +364,17 @@ services:
     networks:
       - dwdrunnetwork
 
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9090:8080
+    networks:
+      - dwdrunnetwork
+    deploy:
+      mode: global
+
 volumes:
   postgres-db-volume:
   mongo-data:
