@@ -17,7 +17,7 @@ fi
 #openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -subj "/CN=localhost" -nodes
 
 #docker network create dwdrunnetwork
-cd ./airflow_infra_config/
+cd ./dwdrun_infra_config/
 docker-compose up -d
 
 echo started With process ID
