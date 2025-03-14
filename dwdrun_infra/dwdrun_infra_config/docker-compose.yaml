@@ -379,7 +379,7 @@ services:
       mode: global
 
   docker-proxy:
-    image: bobrik/socat
+    image: alpine/socat
     command: "TCP4-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock"
     ports:
       - "2376:2375"
