@@ -8,6 +8,7 @@ __pycache__/
 dwdrun_infra/dwdrun_infra_config/logs/
 dwdrun_infra/full_infra_config/logs/
 dwdrun_infra/dwdrun_infra_config/dags/
+dwdrun_infra/dwdrun_infra_config/questdb/
 secrets/asana_personal_acess_token.md
 secrets/bearer_token.md
 secrets/deribit_ro.md
