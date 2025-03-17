@@ -1,0 +1,35 @@
+# Enable standard linting rules
+select = ["E", "F", "W", "I", "N", "D", "UP", "ANN", "B", "C4", "SIM", "RUF"]
+ignore = ["D203", "D213"]
+
+# Allow autofix for all enabled rules
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude common directories
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "venv",
+]
+
+# Line length matching Black
+line-length = 150
+
+# Allow unused variables when underscore-prefixed
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Python target version
+target-version = "py310"
+
+[mccabe]
+max-complexity = 10
+
+[pydocstyle]
+convention = "google"
