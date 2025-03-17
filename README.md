@@ -1,4 +1,49 @@
-# CODING - SCHEDULING
+# MI.Capital - Intellectual Cpaital Automation
+
+## System Overview
+
+
+```mermaid
+flowchart TD
+    A[MI.capital] -->|infra| I[MI Infra]
+
+    %% Services
+    I -->|MI Services| B(Environment Docker Compose)
+    B --> SV[Secrets Vault]
+    B -->  Airflow
+    B -->  DP[Docker Proxy]
+    B -->  QDB[Quest Db]
+
+    %% Administritive App's 
+    I -->MIAdmin[Environment Admin Apps]
+    MIAdmin --> Flower
+    MIAdmin --> Dozzle
+    MIAdmin --> MongoExpress
+    MIAdmin --> Airflow
+
+    Airflow --> AirflowDAGs
+
+    %% Docker Runtime
+    I -->|docker_runtime| D[MI Docker Image]
+    D --> EntryPoint
+    D --> DockerBuild
+    DockerBuild --> SC
+
+    %% Source code
+    A --> |IP| SC[Source Code]
+    SC -->|Scheduling Info|AirflowDAGs
+    SC -->|Core Libs to access infra| E[MI interface Codebase]
+    SC -->|App Specifics| F[*_codebase]
+    
+    
+    F --> MktDataFeeds[Mkt Data Feeds]
+    F --> AlgoEngineLive[Algo Systematic Strategies Running Live]
+    F --> AlgoEngineBacktest[Algo Systematic Strategies Backtest]
+    F --> ExecutionStrategy[Execution Strategies]
+    F --> PositionMonitor[Positon Risk & PnL]
+    F --> PositionMonitor[Portfolio Analytics]
+  
+```
 
 ## Goal
 `Outcome: send myself a quote everyday @ 7am.`
