@@ -1,10 +1,12 @@
 import anthropic
 
+
+# TODO: Add API key
 client = anthropic.Anthropic(
     # defaults to os.environ.get("ANTHROPIC_API_KEY")
-    api_key="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",
+    api_key="",
 )
-dd = "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"
+dd = ""
 message_batch = client.beta.messages.batches.create(
     requests=[
         {
