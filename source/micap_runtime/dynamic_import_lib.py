@@ -7,15 +7,18 @@ __maintainer__ = "Dave Dawson"
 __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
 
-import sys
-import pymongo
+import _frozen_importlib
 import importlib.util
 import logging
-import _frozen_importlib
 import os
+import re
+import sys
+
+import pymongo
 
 
 def is_running_in_docker():
+    """Check if the current environment is running inside a Docker container."""
     return os.environ.get("DOCKER_CONTAINER") == "true"
 
 
@@ -26,6 +29,7 @@ from urllib.parse import quote_plus
 _username = "dd_python_codebase_down"
 _password = "download_me"
 _hostname = "mongodb" if is_running_in_docker() else "localhost"
+logger.info(f"is_running_in_docker: {is_running_in_docker()} as {_hostname}")
 _db_uri = "mongodb://%s:%s@%s:27017/" % (quote_plus(_username), quote_plus(_password), _hostname)
 _db_name = "dwdrun"
 _collection_name = "codebase"
@@ -34,10 +38,11 @@ _collection_name = "codebase"
 class MongoDBModuleLoader:
 
     def __init__(self):
-        self.client = pymongo.MongoClient(_db_uri)
+        """Initialize the MongoDBModuleLoader with a connection to the codebase collection."""
+        self.client = pymongo.MongoClient(_db_uri, waitQueueTimeoutMS=1000)
         self.db = self.client[_db_name]
         self.collection = self.db[_collection_name]
-        logger.debug(f"Connected successfully to python codebase in mongo")
+        logger.debug("Connected successfully to python codebase in mongo")
 
     def create_module(self, spec):
         """Create an uninitialized extension module"""
@@ -50,7 +55,7 @@ class MongoDBModuleLoader:
 
     def get_sub_module_data(self, fullname):
         """Given a full name assume package and return all underlying sub modules"""
-        _related_modules_and_sub_packages = [doc["_id"] for doc in self.collection.find({"_id": {"$regex": f".*{fullname}\..*"}})]
+        _related_modules_and_sub_packages = [doc["_id"] for doc in self.collection.find({"_id": {"$regex": f"^{re.escape(fullname)}.*"}})]
         # Create a set to store unique prefixes
         prefixes = set()
 
@@ -145,3 +150,4 @@ class MongoDBImporter:
 
 # Insert our MongoDBImporter into sys.meta_path
 sys.meta_path.insert(2, MongoDBImporter())
+logger.debug("Added Dynamic libary to positon 2")

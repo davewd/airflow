@@ -7,20 +7,21 @@ __maintainer__ = "Dave Dawson"
 __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
 
-from sys import stdout
 import logging
 import sys
 
 # Configure root logger to send logs to stdout
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logger = logging.getLogger(__name__)
-logger.info(f"Runner Logging Initiated")
+logger.info("Runner Logging Initiated")
 
-import datetime
 import argparse
+import datetime
 import importlib
-from dwdrun import dynamic_import_lib
-logger.info(f"Dynamic Importer Initiated")
+
+import dynamic_import_lib
+
+logger.info("Dynamic Importer Initiated")
 
 
 def main(args):
@@ -42,7 +43,8 @@ def main(args):
     else:
         logger.setLevel(logging.ERROR)
 
-    
+
+    arg_module = fullname = "jobs.market_data.ecb.fx_api"
     arg_module_import = importlib.import_module(arg_module, "...")
     arg_module_import.main(args)
     # Your code to use the runtime argument goes here
@@ -53,7 +55,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--jobModule",
         "-j",
-        default="data_aquisition.market_data.ecb.fx_api",
+        default="jobs.market_data.ecb.fx_api",
         type=str,
         required=True,
     )

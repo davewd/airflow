@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from datetime import date
-from dwdrun.runner import main
+from micap_runtime.runner import main
 from pytest import CaptureFixture
 from typing import Protocol
 import pytest
