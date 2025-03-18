@@ -30,7 +30,7 @@ flowchart TD
     DockerBuild --> SC
 
     %% Source code
-    A --> |IP| SC[Source Code]
+    A --> |IP| SC[Source]
     SC -->|Scheduling Info|AirflowDAGs
     SC -->|Core Libs to access infra| E[MI interface Codebase]
     SC -->|App Specifics| F[*_codebase]
@@ -42,7 +42,7 @@ flowchart TD
     F --> ExecutionStrategy[Execution Strategies]
     F --> PositionMonitor[Positon Risk & PnL]
     F --> PositionMonitor[Portfolio Analytics]
-  
+    
 ```
 
 ## Goal
