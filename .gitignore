@@ -39,3 +39,4 @@ adhoc_data/all_time/79_watson.ofx
 adhoc_data/all_time/data.csv
 adhoc_data/all_time/Download (1).csv
 .DS_Store
+micap_infra/environment_services/micap_data/*   
