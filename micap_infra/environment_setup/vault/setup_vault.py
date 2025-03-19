@@ -41,8 +41,6 @@ path "secret/*" {
 }
 '''
 
-client = None
-
 developer_policy = '''
 # Developer policy
 path "secret/data/dev/*" {
@@ -62,7 +60,29 @@ path "auth/token/renew-self" {
 }
 '''
 
-def client_setup() -> hvac.Client:
+# New read-only policy
+readonly_policy = '''
+# Read-only policy
+path "secret/data/*" {
+  capabilities = ["read", "list"]
+}
+
+path "secret/metadata/*" {
+  capabilities = ["list", "read"]
+}
+
+path "auth/token/lookup-self" {
+  capabilities = ["read"]
+}
+
+path "auth/token/renew-self" {
+  capabilities = ["update"]
+}
+'''
+
+client = None
+
+def client_setup():
     """Setup and authenticate Vault client."""
     global client
 
@@ -78,8 +98,8 @@ def client_setup() -> hvac.Client:
     logger.info(f"Successfully connected to Vault at {VAULT_ADDR}")
     return client
 
-def setup_policies() -> None:
-    """Create admin and developer policies."""
+def setup_policies():
+    """Create admin, developer, and readonly policies."""
     try:
         client.sys.create_or_update_policy(
             name='admin',
@@ -92,11 +112,19 @@ def setup_policies() -> None:
             policy=developer_policy
         )
         logger.info("Developer policy created successfully")
+
+        # Add readonly policy
+        client.sys.create_or_update_policy(
+            name='readonly',
+            policy=readonly_policy
+        )
+        logger.info("Read-only policy created successfully")
+
     except Exception as e:
         logger.error(f"Failed to create policies: {e!s}")
         sys.exit(1)
 
-def setup_auth_methods() -> None:
+def setup_auth_methods():
     """Setup authentication methods for users."""
     try:
         # Enable userpass auth method if not already enabled
@@ -125,11 +153,20 @@ def setup_auth_methods() -> None:
         )
         logger.info("Developer user created with developer policy")
 
+        # Create readonly user
+        readonly_password = os.getenv('READONLY_PASSWORD', 'changeme_readonly')
+        client.auth.userpass.create_or_update_user(
+            username='readonly',
+            password=readonly_password,
+            policies=['readonly']
+        )
+        logger.info("Read-only user created with readonly policy")
+
     except Exception as e:
         logger.error(f"Failed to setup auth methods: {e!s}")
         sys.exit(1)
 
-def enable_secrets_engine() -> None:
+def enable_secrets_engine():
     """Enable KV secrets engine version 2."""
     try:
         if 'secret/' not in client.sys.list_mounted_secrets_engines():
@@ -143,14 +180,14 @@ def enable_secrets_engine() -> None:
         logger.error(f"Failed to enable secrets engine: {e!s}")
         sys.exit(1)
 
-def upload_secrets_from_env() -> None:
+def upload_secrets_from_env():
     """Upload secrets from .env file to Vault."""
     try:
         # Get all environment variables from .env
         dotenv_dict = {
             key: value for key, value in os.environ.items()
             if not key.startswith('VAULT_') and
-            key not in ['ADMIN_PASSWORD', 'DEV_PASSWORD']
+            key not in ['ADMIN_PASSWORD', 'DEV_PASSWORD', 'READONLY_PASSWORD']
         }
 
         # Group secrets by prefixes to organize them
@@ -229,6 +266,9 @@ def main():
     """Run the complete setup process."""
     logger.info("Starting Vault setup process...")
 
+    # Initialize client before using it
+    client_setup()
+
     setup_policies()
     enable_secrets_engine()
     setup_auth_methods()
@@ -248,20 +288,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#
-# vault operator init -key-shares=1 -key-threshold=1
-# vault operator unseal -key="FpOzjOXXy/S09LTHeyO7smwMKtk5AJdmrLHFEG0fjWM="
-# vault status
-# vault audit enable file file_path="/vault/logs/audit.log" #use this if youre having problems iwht the internals of vault
-# vault auth enable -path=github github
-
-#good policy so that it cant be used
-# vault token revoke "root token"
-
-# Create administrative token
-
-# For Each usertype create usertype token
-
-# Create Developer Token
