@@ -1,4 +1,28 @@
-# MI.Capital - Intellectual Cpaital Automation
+# MI.Capital - Intellectual Capital Automation
+
+## Dependencies and Setup
+
+### Python Version Requirements
+- Core functionality: Python 3.13
+- AI components: Python 3.9-3.12 (temporary requirement until AI packages add Python 3.13 support)
+
+### Package Management
+This project uses Poetry for dependency management. To get started:
+
+1. Install Poetry:
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+2. Install core dependencies:
+```bash
+poetry install --without ai
+```
+
+3. For AI components (requires Python 3.9-3.12):
+```bash
+poetry install --with ai
+```
 
 ## System Overview
 
