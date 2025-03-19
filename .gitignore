@@ -40,3 +40,4 @@ adhoc_data/all_time/data.csv
 adhoc_data/all_time/Download (1).csv
 .DS_Store
 micap_infra/environment_services/micap_data/*   
+micap_infra/environment_setup/vault/.env
