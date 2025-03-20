@@ -1,7 +1,8 @@
 """Tests for the dynamic_import_lib module."""
+import re
 import sys
 from collections.abc import Generator
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 
@@ -97,53 +98,71 @@ def test_get_sub_module_data(module_loader: MongoDBModuleLoader) -> None:
 
 def test_get_sub_module_data_nested(module_loader: MongoDBModuleLoader) -> None:
     """Test retrieval of nested submodule data from MongoDB."""
-    mock_documents = [
-        {"_id": "lib.logging.utils"},
-        {"_id": "lib.logging.utils.common"},
-        {"_id": "lib.logging.formatters"},
-        {"_id": "lib.logging.handlers.custom"}
-    ]
-    module_loader.collection.find.return_value = mock_documents
+    # Setup the mock to return different results based on the query
+    def mock_find_side_effect(query, **kwargs):
+        pattern = query["_id"]["$regex"]
 
+        # For lib.logging package query
+        # For lib.logging.utils package query
+        if "^lib\\.logging\\.utils\\." in pattern:
+            return [
+                {"_id": "lib.logging.utils.common"},
+                {"_id": "lib.logging.utils.common.helpers"}
+            ]
+        elif "^lib\\.logging\\." in pattern:
+            return [
+                {"_id": "lib.logging.utils"},
+                {"_id": "lib.logging.utils.common"},
+                {"_id": "lib.logging.formatters"},
+                {"_id": "lib.logging.handlers.custom"}
+            ]
+        # Default case
+        return []
+
+    module_loader.collection.find.side_effect = mock_find_side_effect
+
+    # First call - test for lib.logging package
     result = module_loader.get_sub_module_data("lib.logging")
-
-    # Should only include direct children: formatters, handlers, utils
     assert result["content"] == '__all__ = ["formatters", "handlers", "utils"]'
 
-
-    mock_documents = [
-        {"_id": "lib.logging.utils"},
-        {"_id": "lib.logging.utils.common"},
-    ]
-    module_loader.collection.find.return_value = mock_documents
-
-    # Test for a specific subpackage
+    # Second call - test for lib.logging.utils package
     result = module_loader.get_sub_module_data("lib.logging.utils")
     assert result["content"] == '__all__ = ["common"]'
+
+    # Verify both calls were made with correct patterns
+    assert module_loader.collection.find.call_count == 2
+    module_loader.collection.find.assert_has_calls([
+        call({"_id": {"$regex": f"^{re.escape('lib.logging')}\\."}}),
+        call({"_id": {"$regex": f"^{re.escape('lib.logging.utils')}\\."}}),
+    ])
 
 
 def test_exec_module_regular_module(module_loader: MongoDBModuleLoader) -> None:
     """Test execution of a regular module code retrieved from MongoDB."""
-    mock_module = MagicMock()
-    mock_module.__name__ = "test.module"
-    mock_module.__dict__ = {}
+    # Create a simple mock module
+    mock_module = type('MockModule', (), {'__dict__': {}, '__name__': 'test.module'})()
 
     test_code = "def test_func(): return 42"
     module_loader.get_data = MagicMock(return_value=test_code)
 
-    with patch.dict(sys.modules, {}, clear=True):
+    # Save original modules and clear sys.modules
+    orig_modules = dict(sys.modules)
+    sys.modules.clear()
+    try:
         module_loader.exec_module(mock_module)
-
-    assert "test_func" in mock_module.__dict__
-    assert mock_module.__dict__["test_func"]() == 42
-    assert mock_module.__name__ in sys.modules
+        assert "test_func" in mock_module.__dict__
+        assert mock_module.__dict__["test_func"]() == 42
+        assert mock_module.__name__ in sys.modules
+    finally:
+        # Restore original modules
+        sys.modules.clear()
+        sys.modules.update(orig_modules)
 
 
 def test_exec_module_package(module_loader: MongoDBModuleLoader) -> None:
     """Test execution of a package module code retrieved from MongoDB."""
-    mock_module = MagicMock()
-    mock_module.__name__ = "test.package"
-    mock_module.__dict__ = {}
+    # Create a simple mock module
+    mock_module = type('MockModule', (), {'__dict__': {}, '__name__': 'test.package'})()
 
     # Simulate FileNotFoundError for direct module, indicating it's a package
     module_loader.get_data = MagicMock(side_effect=FileNotFoundError("Module not found"))
@@ -155,14 +174,20 @@ def test_exec_module_package(module_loader: MongoDBModuleLoader) -> None:
     # Mock the collection.count_documents to indicate submodules exist
     module_loader.collection.count_documents = MagicMock(return_value=2)
 
-    with patch.dict(sys.modules, {}, clear=True):
+    # Save original modules and clear sys.modules
+    orig_modules = dict(sys.modules)
+    sys.modules.clear()
+    try:
         module_loader.exec_module(mock_module)
-
-    # Check that __all__ was properly set
-    assert "__all__" in mock_module.__dict__
-    assert module_loader.get_sub_module_data.called
-    assert hasattr(mock_module, "__path__")
-    assert mock_module.__name__ in sys.modules
+        # Check that __all__ was properly set
+        assert "__all__" in mock_module.__dict__
+        assert module_loader.get_sub_module_data.called
+        assert hasattr(mock_module, "__path__")
+        assert mock_module.__name__ in sys.modules
+    finally:
+        # Restore original modules
+        sys.modules.clear()
+        sys.modules.update(orig_modules)
 
 
 def test_find_spec_for_module(module_importer: MongoDBImporter) -> None:
@@ -183,9 +208,15 @@ def test_find_spec_for_package(module_importer: MongoDBImporter) -> None:
     """Test finding module spec for a package."""
     # Setup module_loader to fail for direct module but have submodules
     module_importer.loader.get_data = MagicMock(side_effect=FileNotFoundError)
-    module_importer.loader.collection.count_documents = MagicMock(return_value=3)
+    module_importer.loader.collection.count_documents = MagicMock(return_value=2)
 
-    with patch.dict(sys.modules, {}, clear=True):
+    # Mock spec creation to avoid importlib internals
+    mock_spec = MagicMock()
+    mock_spec.name = "test.package"
+    mock_spec.loader = module_importer.loader
+    mock_spec.submodule_search_locations = ["test.package"]  # This is what we're testing
+
+    with patch("importlib.util.spec_from_loader", return_value=mock_spec):
         spec = module_importer.find_spec("test.package")
 
     assert spec is not None
@@ -211,19 +242,26 @@ def test_from_import_syntax(module_loader: MongoDBModuleLoader) -> None:
 
     def mock_find(query, **kwargs):
         pattern = query["_id"]["$regex"]
-        pattern = pattern[1:-1]  # Remove the ^$ wrapper
+        pattern = pattern.replace("^", "").replace("\\.", ".").replace("$", "")
+        base_package = pattern.rstrip(".")
+
         results = []
         for key in package_structure:
-            if key.startswith(pattern) and key != pattern:
-                results.append({"_id": key})
+            # Check if the key is a direct child of the base package
+            if key.startswith(base_package + "."):
+                remaining = key[len(base_package) + 1:]
+                if "." not in remaining:  # Only direct children
+                    results.append({"_id": key})
         return results
 
     def mock_count_documents(query, **kwargs):
         pattern = query["_id"]["$regex"]
-        pattern = pattern[1:-2]  # Remove the ^$ and \. wrapper
+        pattern = pattern.replace("^", "").replace("\\.", ".").replace("$", "")
+        base_package = pattern.rstrip(".")
+
         count = 0
         for key in package_structure:
-            if key.startswith(pattern + "."):
+            if key.startswith(base_package + "."):
                 count += 1
         return count
 
@@ -287,19 +325,26 @@ def test_hierarchical_import(module_loader: MongoDBModuleLoader) -> None:
 
     def mock_find(query, **kwargs):
         pattern = query["_id"]["$regex"]
-        pattern = pattern[1:-1]  # Remove the ^$ wrapper
+        pattern = pattern.replace("^", "").replace("\\.", ".").replace("$", "")
+        base_package = pattern.rstrip(".")
+
         results = []
         for key in package_structure:
-            if key.startswith(pattern) and key != pattern:
-                results.append({"_id": key})
+            # Check if the key is a direct child of the base package
+            if key.startswith(base_package + "."):
+                remaining = key[len(base_package) + 1:]
+                if "." not in remaining:  # Only direct children
+                    results.append({"_id": key})
         return results
 
     def mock_count_documents(query, **kwargs):
         pattern = query["_id"]["$regex"]
-        pattern = pattern[1:-2]  # Remove the ^$ and \. wrapper
+        pattern = pattern.replace("^", "").replace("\\.", ".").replace("$", "")
+        base_package = pattern.rstrip(".")
+
         count = 0
         for key in package_structure:
-            if key.startswith(pattern + "."):
+            if key.startswith(base_package + "."):
                 count += 1
         return count
 
