@@ -16,13 +16,15 @@ __maintainer__ = "Dave Dawson"
 __email__ = "davedawson.co@gmail.com"
 __status__ = "Production"
 
-import argparse
+import argparse  # noqa: I001
 import datetime
 import importlib
 import logging
 import sys
 
-import dynamic_import_lib
+from dynamic_import_lib import setup_micap_importing, is_running_in_docker, _db_uri
+setup_micap_importing()
+
 from lib.logging.utils import DEFAULT_LOG_LEVEL, setup_logging
 
 # Initialize logger using the centralized logging utility
@@ -43,8 +45,8 @@ def main(args: argparse.Namespace) -> None:
 
     logger.info(f"Starting Module: {arg_module} for run Date/Time: {run_datetime} logging level: {log_level}")
     logger.info(f"Sys Metapath currently looks like: {sys.meta_path}")
-    is_docker = dynamic_import_lib.is_running_in_docker()
-    logger.info(f"Docker Fn evaluated {is_docker} and uri : {dynamic_import_lib._db_uri}")
+    is_docker = is_running_in_docker()
+    logger.info(f"Docker Fn evaluated {is_docker} and uri : {_db_uri}")
 
     if log_level == "ERROR":
         logger.setLevel(logging.ERROR)
@@ -58,7 +60,6 @@ def main(args: argparse.Namespace) -> None:
     arg_module_import = importlib.import_module(arg_module, "...")
     arg_module_import.main(args)
     # Your code to use the runtime argument goes here
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parse arguments to injection into python layer")
