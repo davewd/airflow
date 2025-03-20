@@ -1,5 +1,4 @@
-"""
-Logging Utilities
+"""Logging Utilities
 ---------------
 Centralized logging configuration for the project.
 
@@ -11,7 +10,7 @@ import logging
 import logging.handlers
 import sys
 from pathlib import Path
-from typing import Optional, Union
+from typing import Union
 
 # Type aliases
 PathLike = Union[str, Path]
@@ -40,9 +39,8 @@ class CustomFormatter(logging.Formatter):
         return super().format(record)
 
 
-def setup_logging(log_file: Optional[PathLike] = None, level: int = DEFAULT_LOG_LEVEL, module_name: Optional[str] = None) -> logging.Logger:
-    """
-    Configure logging with both file and console handlers.
+def setup_logging(log_file: PathLike | None = None, level: int = DEFAULT_LOG_LEVEL, module_name: str | None = None) -> logging.Logger:
+    """Configure logging with both file and console handlers.
 
     Args:
         log_file: Path to log file. If None, only console logging is setup.
