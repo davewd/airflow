@@ -1,6 +1,6 @@
-import requests
 import datetime
-import pandasdmx as sdmx
+
+import sdmx
 
 
 def get_ecb_data_api(start_date: datetime.date = datetime.date.today(), end_date: datetime.date = datetime.date.today()):
@@ -14,5 +14,5 @@ def get_ecb_data_api(start_date: datetime.date = datetime.date.today(), end_date
         key={"CURRENCY": ["CHF", "USD", "GBP", "AUD"]},
         params=parameters,
     )
-    data = data_response.to_pandas()
-    return data
+    dataframe = sdmx.to_pandas(data_response)
+    return dataframe
