@@ -27,6 +27,9 @@ COPY ../../source/ source/
 COPY ../../airflow_dags/ airflow_dags/
 COPY ../../micap_infra/ micap_infra/
 
+RUN echo|pwd
+RUN echo|ls -R
+
 # forward request and error logs to docker log collector
 RUN ln -sf /proc/1/fd/1 /var/log/test.log
 
