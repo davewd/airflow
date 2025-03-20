@@ -148,6 +148,11 @@ class MongoDBImporter:
                 return None
 
 
-# Insert our MongoDBImporter into sys.meta_path
-sys.meta_path.insert(2, MongoDBImporter())
-logger.debug("Added Dynamic libary to positon 2")
+def setup_micap_importing() -> None:
+    """Setup the MongoDB importer for dynamic module loading."""
+    # Insert our MongoDBImporter into sys.meta_path
+    sys.meta_path.insert(2, MongoDBImporter())
+    logger.info("Added Dynamic libary to positon 2")
+
+if __name__ == "__main__":
+    setup_micap_importing()
