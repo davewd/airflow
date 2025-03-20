@@ -55,59 +55,50 @@ class MongoDBModuleLoader:
 
     def get_sub_module_data(self, fullname):
         """Given a full name assume package and return all underlying sub modules"""
-        _related_modules_and_sub_packages = [doc["_id"] for doc in self.collection.find({"_id": {"$regex": f"^{re.escape(fullname)}.*"}})]
-        # Create a set to store unique prefixes
-        prefixes = set()
+        pattern = f"^{re.escape(fullname)}\\."
+        modules = [doc["_id"] for doc in self.collection.find({"_id": {"$regex": pattern}})]
 
-        # Iterate over each module name in the list
-        for name in _related_modules_and_sub_packages:
-            # Split the module name at '.' delimiter
-            parts = name.split(".")
+        # Find direct children only
+        direct_children = set()
+        for module_name in modules:
+            # Remove the package prefix
+            relative_name = module_name[len(fullname)+1:]
+            # Get only the first segment (direct child)
+            first_segment = relative_name.split('.')[0]
+            direct_children.add(first_segment)
 
-            # Iterate over each part of the module name
-            for i in range(1, len(parts)):
-                # Join the parts up to the current index and add it to the set
-                prefix = ".".join(parts[2:i])
-                if len(prefix):
-                    prefixes.add(prefix)
-
-        # Convert the set to a sorted list
-        result = sorted(prefixes)
-        all_list = '", "'.join(result)
-        module_data = {"content": f'__all__=[ "{all_list}"]'}  # manually construct the list of sub packages and modules
+        all_list = '", "'.join(sorted(direct_children))
+        module_data = {"content": f'__all__ = ["{all_list}"]' if all_list else '__all__ = []'}
         return module_data
 
     def exec_module(self, module):
         """Initialize an extension module"""
         fullname = module.__name__
 
-        module_code = self.get_data(fullname)
-        if module_code is None:
-            # This is a package
-            module_code = self.get_sub_module_data(fullname)
-
-        # if module_data:
-        #    module_code = module_data.get("content", "")
-        #    module = self.create_module(fullname)
-        #    self.exec_module(module)
-        #    return module
-        # else:
-        #    logger.info(f"Failed for {fullname}")
-        #    raise ImportError(f"Module '{fullname}' not found in MongoDB collection.")
         try:
-            _ = sys.modules.pop(module.__name__)
-        except KeyError:
-            logger.error("module %s is not in sys.modules", module.__name__)
-            # Create a new module object if it doesn't exist
+            # Try to get module code directly
+            module_code = self.get_data(fullname)
+            is_package = False
+        except FileNotFoundError:
+            # If not found, it might be a package
+            pattern = f"^{re.escape(fullname)}\\."
+            if self.loader.collection.count_documents({"_id": {"$regex": pattern}}) > 0:
+                module_code = self.get_sub_module_data(fullname)
+                is_package = True
+            else:
+                raise ImportError(f"Module '{fullname}' not found in MongoDB collection.")
 
         if not hasattr(module, "__file__"):
-            module.__file__ = module.__name__
+            module.__file__ = f"<mongodb>/{fullname.replace('.', '/')}"
+
+        if is_package and not hasattr(module, "__path__"):
+            module.__path__ = [fullname]
 
         # Execute module code in the module's namespace
-        exec(module_code, module.__dict__)
+        exec(module_code["content"], module.__dict__)
 
-        sys.modules[module.__name__] = module
-        globals()[module.__name__] = module
+        # Ensure the module is in sys.modules
+        sys.modules[fullname] = module
 
     def load_module(self, fullname):
         pass
@@ -133,19 +124,22 @@ class MongoDBImporter:
         self.loader = MongoDBModuleLoader()
 
     def find_spec(self, fullname, path=None, target=None):
-
         if fullname not in sys.modules:  # Check if the module is not already imported
             try:
-                file_path_mongo = self.loader.get_filename(fullname)
-                is_mongo_package = True
+                # Check if this is a direct module
+                try:
+                    self.loader.get_data(fullname)
+                    return importlib.util.spec_from_loader(fullname, loader=self.loader, is_package=False)
+                except FileNotFoundError:
+                    # Check if this is a package (has submodules)
+                    pattern = f"^{re.escape(fullname)}\\."
+                    if self.loader.collection.count_documents({"_id": {"$regex": pattern}}) > 0:
+                        return importlib.util.spec_from_loader(fullname, loader=self.loader, is_package=True)
+                    return None
             except Exception as e:
-                logger.debug(f"Failed importing package from Mongo due to fullname ({fullname}) not resolving {e}")
-                is_mongo_package = False
-
-            if is_mongo_package:
-                return importlib.util.spec_from_loader(fullname, loader=self.loader, is_package=True)
-            else:
+                logger.debug(f"Failed importing from Mongo: {fullname}, error: {e}")
                 return None
+        return None
 
 
 def setup_micap_importing() -> None:
