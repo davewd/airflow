@@ -52,17 +52,24 @@ def traverse_directory(directory: str) -> None:
     """
     for root, dirs, files in os.walk(directory):
         for file in files:
+            if "__pycache__" in root:
+                continue
+            file_path = os.path.join(root, file)
+            relative_file_path = os.path.relpath(file_path, directory)
+            path_parts = relative_file_path.split(os.sep)
+
+            current_path = ""
+            for i, part in enumerate(path_parts[:-1]):  # Exclude the filename
+                current_path = part if i == 0 else os.path.join(current_path, part)
+                if init_hierarchy.get(part, True):
+                    upsert_document(part, "__init__.py")
+                    init_hierarchy[part] = False
+
             if file.endswith(".py"): # TODO: make this work for all files e.g. readme or configs
                 file_path = os.path.join(root, file)
                 with open(file_path) as f:
                     content = f.read()
                     relative_file_path = os.path.relpath(file_path, directory)
-                    for part in os.path.pathsep.split(relative_file_path):
-                        if init_hierarchy.get(part, False):
-                            #upsert_document(part, "__init__.py")
-                            logger.info(f"Upserted document {part} into MongoDB")
-                            init_hierarchy[part] = True
-
                     upsert_document(relative_file_path, content)
 
 def upsert_document(relative_file_path: str, content: str) -> None:
@@ -88,8 +95,9 @@ def upsert_document(relative_file_path: str, content: str) -> None:
         record_name = record_name[:-3]  # Remove '.py' from the end
 
     # Upsert content into MongoDB collection
-    collection.update_one({"_id": record_name}, {"$set": {"content": content}}, upsert=True)
-    logger.info(f"Upserted document {record_name} into MongoDB")
+    write = collection.update_one({"_id": record_name}, {"$set": {"content": content}}, upsert=True)
+    if write.modified_count > 0:
+        logger.info(f"Upserted document {record_name} into MongoDB")
 
 def clear_collection() -> None:
     """Clear all documents from the MongoDB collection.
