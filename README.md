@@ -190,3 +190,16 @@ To enable airlfow jobs to be automatially updated from github repo one must conn
 5. update Dockerfile base image -> 3.13.X
 6. build docker image > build_docker.sh
 7. test docker image >tests/test_run_micap.sh
+
+Daily Startup
+
+Terminal 1: System Performance
+
+1. sudo mactop
+
+Terminal 2: Docker Compose
+
+1. cd "/Users/daviddawson/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/mi_capital"
+2. cd micap_infra/
+3. ./start_all_services.sh
+4. If req: chmod +x ./start_all_services.sh
