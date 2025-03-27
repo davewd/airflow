@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Python: Current File",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
@@ -14,32 +14,11 @@
     },
     {
       "name": "Python: Docker Run",
-      "type": "python",
+      "type": "debugpy",
       "request": "attach",
       "connect": {"host": "127.0.0.1", "port": 5678},
       "pathMappings": [{"localRoot": "${workspaceFolder}", "remoteRoot": "/app"}],
-      "dockerContainer": {
-                "containerName": "micaprun_terminal",
-      "python": {
-                    "pythonPath": "/usr/local/bin/python",
-                    "args": ["${relativeFile}"]
-                }
-      }
-    },
-    {
-      "name": "Python: Docker Debug",
-      "type": "python",
-      "request": "attach",
-      "connect": {"host": "127.0.0.1", "port": 5678},
-      "pathMappings": [{"localRoot": "${workspaceFolder}", "remoteRoot": "/app"}],
-      "dockerContainer": {
-                "containerName": "micaprun_terminal",
-      "python": {
-                    "pythonPath": "/usr/local/bin/python",
-                    "args": ["${relativeFile}"]
-                }
-      }
+      "preLaunchTask": "docker-run: debug"
     }
-
   ]
 }

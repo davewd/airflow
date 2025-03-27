@@ -9,7 +9,8 @@
           "tag": "micaprun_terminal:latest",
           "dockerfile": "${workspaceFolder}/micap_infra/environment_runtime/Dockerfile_terminal",
           "context": "${workspaceFolder}",
-          "pull": true
+          "pull": true,
+          "target": "debugger"
       }
   },
   {
@@ -20,7 +21,8 @@
       ],
       "python": {
           "file": "${file}"
-      }
+      },
+      "isBackground": true
   }
   ]
 }
