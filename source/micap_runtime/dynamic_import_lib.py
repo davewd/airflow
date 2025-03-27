@@ -134,6 +134,7 @@ class MongoDBModuleLoader:
 
 class MongoDBImporter:
     def __init__(self) -> None:
+        """Initialize the MongoDB importer."""
         self.loader = MongoDBModuleLoader()
 
     def find_spec(self, fullname: str, path=None, target=None) -> object | None:
@@ -171,8 +172,8 @@ class MongoDBImporter:
 def setup_micap_importing() -> None:
     """Setup the MongoDB importer for dynamic module loading."""
     # Insert our MongoDBImporter into sys.meta_path
-    sys.meta_path.insert(2, MongoDBImporter())
-    logger.info("Added Dynamic libary to positon 2")
+    sys.meta_path.insert(3, MongoDBImporter())
+    logger.info("Added Dynamic libary to positon 3")
 
 
 if __name__ == "__main__":
