@@ -8,10 +8,38 @@
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
-      "python": "python3.11",
       "program": "${file}",
       "console": "integratedTerminal",
       "justMyCode": true
+    },
+    {
+      "name": "Python: Docker Run",
+      "type": "python",
+      "request": "attach",
+      "connect": {"host": "127.0.0.1", "port": 5678},
+      "pathMappings": [{"localRoot": "${workspaceFolder}", "remoteRoot": "/app"}],
+      "dockerContainer": {
+                "containerName": "micaprun_terminal",
+      "python": {
+                    "pythonPath": "/usr/local/bin/python",
+                    "args": ["${relativeFile}"]
+                }
+      }
+    },
+    {
+      "name": "Python: Docker Debug",
+      "type": "python",
+      "request": "attach",
+      "connect": {"host": "127.0.0.1", "port": 5678},
+      "pathMappings": [{"localRoot": "${workspaceFolder}", "remoteRoot": "/app"}],
+      "dockerContainer": {
+                "containerName": "micaprun_terminal",
+      "python": {
+                    "pythonPath": "/usr/local/bin/python",
+                    "args": ["${relativeFile}"]
+                }
+      }
     }
+
   ]
 }

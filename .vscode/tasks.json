@@ -2,13 +2,25 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "markdownlint",
-      "problemMatcher": ["$markdownlint"],
-      "label": "markdownlint: Lint all Markdown files in the workspace with markdownlint",
-      "group": {
-        "kind": "build",
-        "isDefault": true
+      "type": "docker-build",
+      "label": "docker-build",
+      "platform": "python",
+      "dockerBuild": {
+          "tag": "micaprun_terminal:latest",
+          "dockerfile": "${workspaceFolder}/micap_infra/environment_runtime/Dockerfile_terminal",
+          "context": "${workspaceFolder}",
+          "pull": true
       }
-    }
+  },
+  {
+      "type": "docker-run",
+      "label": "docker-run: debug",
+      "dependsOn": [
+          "docker-build"
+      ],
+      "python": {
+          "file": "${file}"
+      }
+  }
   ]
 }
