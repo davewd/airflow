@@ -1,17 +1,12 @@
 #Dockerfile
-FROM python:3.13.2
+FROM python:3.13.2 AS base
 
 # Install additional dependencies and Poetry
 ENV DOCKER_CONTAINER=true
 ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VIRTUALENVS_CREATE=false
+ENV PYTHONVERBOSE=true
 RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Keeps Python from generating .pyc files in the container
-ENV PYTHONDONTWRITEBYTECODE=1
-
-# Turns off buffering for easier container logging
-ENV PYTHONUNBUFFERED=1
 
 # Add Poetry to PATH
 ENV PATH="${POETRY_HOME}/bin:$PATH"
@@ -32,6 +27,7 @@ RUN poetry install --without ai --no-interaction
 COPY ../../source/ source/
 COPY ../../airflow_dags/ airflow_dags/
 COPY ../../micap_infra/ micap_infra/
+ENV PYTHONPATH="${PYTHONPATH}:/app/source/micap_runtime/"
 
 RUN echo|pwd
 RUN echo|ls -R
@@ -39,4 +35,11 @@ RUN echo|ls -R
 # forward request and error logs to docker log collector
 RUN ln -sf /proc/1/fd/1 /var/log/test.log
 
-ENTRYPOINT [ "poetry", "run", "python", "-u", "source/micap_runtime/runner.py" ]
+FROM base AS debugger
+RUN poetry add debugpy
+ENTRYPOINT [ "poetry", "run", "python", "-m", "debugpy",  ]
+
+
+FROM base AS primary
+
+ENTRYPOINT [ "poetry", "run", "python", "-m" ]
