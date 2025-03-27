@@ -41,3 +41,5 @@ adhoc_data/all_time/Download (1).csv
 .DS_Store
 micap_infra/environment_services/micap_data/*   
 micap_infra/environment_setup/vault/.env
+term_run.log
+term_build.log
