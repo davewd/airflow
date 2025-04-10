@@ -1,0 +1,41 @@
+{
+    "country": "Brazil",
+    "un_code": "076",
+    "major_indices": ["Bovespa"],
+    "currency": "BRL",
+    "exchanges": ["B3 (Brasil Bolsa Balcão)"],
+    "market_cap": "Approx. $800 billion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "09:30",
+            "end": "10:00",
+            "timezone": "BRT",
+            "description": "Pre-opening"
+        },
+        "opening_auction": {
+            "start": "10:00",
+            "end": "10:01",
+            "timezone": "BRT",
+            "description": "Opening call"
+        },
+        "regular_session": {
+            "start": "10:00",
+            "end": "17:00",
+            "timezone": "BRT",
+            "description": "Regular trading session"
+        },
+        "closing_auction": {
+            "start": "16:55",
+            "end": "17:00",
+            "timezone": "BRT",
+            "description": "Closing call"
+        },
+        "after_market": {
+            "start": "17:30",
+            "end": "18:00",
+            "timezone": "BRT",
+            "description": "After market session"
+        },
+        "breaks": []
+    }
+}

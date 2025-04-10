@@ -1,0 +1,41 @@
+{
+    "country": "France",
+    "un_code": "250",
+    "major_indices": ["CAC 40"],
+    "currency": "EUR",
+    "exchanges": ["Euronext Paris"],
+    "market_cap": "Approx. $2.2 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "07:15",
+            "end": "09:00",
+            "timezone": "CET",
+            "description": "Pre-opening phase"
+        },
+        "opening_auction": {
+            "start": "09:00",
+            "end": "09:01",
+            "timezone": "CET",
+            "description": "Opening auction"
+        },
+        "regular_session": {
+            "start": "09:00",
+            "end": "17:30",
+            "timezone": "CET",
+            "description": "Continuous trading"
+        },
+        "closing_auction": {
+            "start": "17:30",
+            "end": "17:35",
+            "timezone": "CET",
+            "description": "Closing auction"
+        },
+        "after_market": {
+            "start": "17:35",
+            "end": "18:00",
+            "timezone": "CET",
+            "description": "Trading at last"
+        },
+        "breaks": []
+    }
+}

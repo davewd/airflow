@@ -1,0 +1,41 @@
+{
+    "country": "United Kingdom",
+    "un_code": "826",
+    "major_indices": ["FTSE 100", "FTSE 250"],
+    "currency": "GBP",
+    "exchanges": ["London Stock Exchange"],
+    "market_cap": "Approx. $3 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "07:00",
+            "end": "08:00",
+            "timezone": "GMT",
+            "description": "Pre-market trading"
+        },
+        "opening_auction": {
+            "start": "08:00",
+            "end": "08:00:30",
+            "timezone": "GMT",
+            "description": "Opening auction"
+        },
+        "regular_session": {
+            "start": "08:00",
+            "end": "16:30",
+            "timezone": "GMT",
+            "description": "Main trading session"
+        },
+        "closing_auction": {
+            "start": "16:30",
+            "end": "16:35",
+            "timezone": "GMT",
+            "description": "Closing auction"
+        },
+        "after_market": {
+            "start": "16:35",
+            "end": "17:15",
+            "timezone": "GMT",
+            "description": "After hours trading"
+        },
+        "breaks": []
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "country": "Singapore",
+    "un_code": "702",
+    "major_indices": ["Straits Times Index"],
+    "currency": "SGD",
+    "exchanges": ["Singapore Exchange"],
+    "market_cap": "Approx. $650 billion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "08:30",
+            "end": "09:00",
+            "timezone": "SGT",
+            "description": "Pre-open"
+        },
+        "opening_auction": {
+            "start": "08:59",
+            "end": "09:00",
+            "timezone": "SGT",
+            "description": "Opening routine"
+        },
+        "regular_session_morning": {
+            "start": "09:00",
+            "end": "12:00",
+            "timezone": "SGT",
+            "description": "Morning session"
+        },
+        "breaks": [
+            {
+                "start": "12:00",
+                "end": "13:00",
+                "timezone": "SGT",
+                "description": "Lunch break"
+            }
+        ],
+        "regular_session_afternoon": {
+            "start": "13:00",
+            "end": "17:00",
+            "timezone": "SGT",
+            "description": "Afternoon session"
+        },
+        "closing_auction": {
+            "start": "17:00",
+            "end": "17:06",
+            "timezone": "SGT",
+            "description": "Closing routine"
+        },
+        "after_market": null
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "country": "China",
+    "un_code": "156",
+    "major_indices": ["Shanghai Composite", "Shenzhen Component"],
+    "currency": "CNY",
+    "exchanges": ["Shanghai Stock Exchange", "Shenzhen Stock Exchange"],
+    "market_cap": "Approx. $9 trillion",
+    "trading_sessions": {
+        "pre_market": null,
+        "opening_auction": {
+            "start": "09:15",
+            "end": "09:25",
+            "timezone": "CST",
+            "description": "Call auction for opening prices"
+        },
+        "regular_session_morning": {
+            "start": "09:30",
+            "end": "11:30",
+            "timezone": "CST",
+            "description": "Morning continuous trading"
+        },
+        "breaks": [
+            {
+                "start": "11:30",
+                "end": "13:00",
+                "timezone": "CST",
+                "description": "Lunch break"
+            }
+        ],
+        "regular_session_afternoon": {
+            "start": "13:00",
+            "end": "14:57",
+            "timezone": "CST",
+            "description": "Afternoon continuous trading"
+        },
+        "closing_auction": {
+            "start": "14:57",
+            "end": "15:00",
+            "timezone": "CST",
+            "description": "Closing call auction"
+        },
+        "after_market": null
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "country": "Hong Kong",
+    "un_code": "344",
+    "major_indices": ["Hang Seng"],
+    "currency": "HKD",
+    "exchanges": ["Hong Kong Stock Exchange"],
+    "market_cap": "Approx. $4.5 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "09:00",
+            "end": "09:30",
+            "timezone": "HKT",
+            "description": "Pre-opening session"
+        },
+        "opening_auction": {
+            "start": "09:20",
+            "end": "09:30",
+            "timezone": "HKT",
+            "description": "Pre-opening auction"
+        },
+        "regular_session_morning": {
+            "start": "09:30",
+            "end": "12:00",
+            "timezone": "HKT",
+            "description": "Morning continuous trading session"
+        },
+        "breaks": [
+            {
+                "start": "12:00",
+                "end": "13:00",
+                "timezone": "HKT",
+                "description": "Extended lunch break"
+            }
+        ],
+        "regular_session_afternoon": {
+            "start": "13:00",
+            "end": "16:00",
+            "timezone": "HKT",
+            "description": "Afternoon continuous trading session"
+        },
+        "closing_auction": {
+            "start": "16:00",
+            "end": "16:10",
+            "timezone": "HKT",
+            "description": "Closing auction session"
+        },
+        "after_market": null
+    }
+}

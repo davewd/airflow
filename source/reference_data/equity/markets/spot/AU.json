@@ -1,0 +1,41 @@
+{
+    "country": "Australia",
+    "un_code": "036",
+    "major_indices": ["ASX 200"],
+    "currency": "AUD",
+    "exchanges": ["Australian Securities Exchange"],
+    "market_cap": "Approx. $1.5 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "07:00",
+            "end": "10:00",
+            "timezone": "AEST",
+            "description": "Pre-market adjustment phase"
+        },
+        "opening_auction": {
+            "start": "10:00",
+            "end": "10:10",
+            "timezone": "AEST",
+            "description": "Staggered opening auction by alphabetical groups"
+        },
+        "regular_session": {
+            "start": "10:00",
+            "end": "16:00",
+            "timezone": "AEST",
+            "description": "Normal trading phase"
+        },
+        "closing_auction": {
+            "start": "16:00",
+            "end": "16:10",
+            "timezone": "AEST",
+            "description": "Closing single price auction"
+        },
+        "after_market": {
+            "start": "16:10",
+            "end": "17:00",
+            "timezone": "AEST",
+            "description": "Adjust phase"
+        },
+        "breaks": []
+    }
+}

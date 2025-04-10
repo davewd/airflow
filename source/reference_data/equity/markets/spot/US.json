@@ -1,0 +1,41 @@
+{
+    "country": "United States",
+    "un_code": "840",
+    "major_indices": ["S&P 500", "Dow Jones", "NASDAQ"],
+    "currency": "USD",
+    "exchanges": ["New York Stock Exchange", "NASDAQ"],
+    "market_cap": "Approx. $50 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "04:00",
+            "end": "09:30",
+            "timezone": "EST",
+            "description": "Electronic trading before regular market hours"
+        },
+        "opening_auction": {
+            "start": "09:30",
+            "end": "09:35",
+            "timezone": "EST",
+            "description": "Price discovery period that determines opening prices"
+        },
+        "regular_session": {
+            "start": "09:30",
+            "end": "16:00",
+            "timezone": "EST",
+            "description": "Main trading session"
+        },
+        "closing_auction": {
+            "start": "15:58",
+            "end": "16:00",
+            "timezone": "EST",
+            "description": "Price discovery period that determines closing prices"
+        },
+        "after_market": {
+            "start": "16:00",
+            "end": "20:00",
+            "timezone": "EST",
+            "description": "Extended hours trading after regular session"
+        },
+        "breaks": []
+    }
+}

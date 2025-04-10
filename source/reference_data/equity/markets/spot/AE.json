@@ -1,0 +1,36 @@
+{
+    "country": "United Arab Emirates",
+    "un_code": "784",
+    "major_indices": ["ADX General Index", "DFM General Index"],
+    "currency": "AED",
+    "exchanges": ["Abu Dhabi Securities Exchange", "Dubai Financial Market"],
+    "market_cap": "Approx. $250 billion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "09:30",
+            "end": "10:00",
+            "timezone": "GST",
+            "description": "Pre-open session"
+        },
+        "opening_auction": {
+            "start": "09:50",
+            "end": "10:00",
+            "timezone": "GST",
+            "description": "Opening auction"
+        },
+        "regular_session": {
+            "start": "10:00",
+            "end": "15:00",
+            "timezone": "GST",
+            "description": "Continuous trading session"
+        },
+        "closing_auction": {
+            "start": "14:45",
+            "end": "15:00",
+            "timezone": "GST",
+            "description": "Pre-closing session"
+        },
+        "after_market": null,
+        "breaks": []
+    }
+}

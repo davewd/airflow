@@ -1,0 +1,36 @@
+{
+    "country": "India",
+    "un_code": "356",
+    "major_indices": ["SENSEX", "NIFTY 50"],
+    "currency": "INR",
+    "exchanges": ["Bombay Stock Exchange", "National Stock Exchange of India"],
+    "market_cap": "Approx. $3.5 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "09:00",
+            "end": "09:15",
+            "timezone": "IST",
+            "description": "Pre-open session"
+        },
+        "opening_auction": {
+            "start": "09:08",
+            "end": "09:15",
+            "timezone": "IST",
+            "description": "Call auction for open"
+        },
+        "regular_session": {
+            "start": "09:15",
+            "end": "15:30",
+            "timezone": "IST",
+            "description": "Continuous trading session"
+        },
+        "closing_auction": {
+            "start": "15:30",
+            "end": "15:40",
+            "timezone": "IST",
+            "description": "Closing session"
+        },
+        "after_market": null,
+        "breaks": []
+    }
+}

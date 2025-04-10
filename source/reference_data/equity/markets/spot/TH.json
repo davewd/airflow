@@ -1,0 +1,49 @@
+{
+    "country": "Thailand",
+    "un_code": "764",
+    "major_indices": ["SET"],
+    "currency": "THB",
+    "exchanges": ["Stock Exchange of Thailand"],
+    "market_cap": "Approx. $550 billion",
+    "trading_sessions": {
+        "pre_market": null,
+        "opening_auction": {
+            "start": "09:30",
+            "end": "10:00",
+            "timezone": "ICT",
+            "description": "Pre-open session"
+        },
+        "regular_session_morning": {
+            "start": "10:00",
+            "end": "12:30",
+            "timezone": "ICT",
+            "description": "Morning session"
+        },
+        "breaks": [
+            {
+                "start": "12:30",
+                "end": "14:00",
+                "timezone": "ICT",
+                "description": "Intermission break"
+            }
+        ],
+        "regular_session_afternoon": {
+            "start": "14:00",
+            "end": "16:30",
+            "timezone": "ICT",
+            "description": "Afternoon session"
+        },
+        "closing_auction": {
+            "start": "16:30",
+            "end": "16:40",
+            "timezone": "ICT",
+            "description": "Pre-close"
+        },
+        "after_market": {
+            "start": "16:40",
+            "end": "17:00",
+            "timezone": "ICT",
+            "description": "Off-hour trading"
+        }
+    }
+}

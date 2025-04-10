@@ -1,0 +1,49 @@
+{
+    "country": "Japan",
+    "un_code": "392",
+    "major_indices": ["Nikkei 225", "TOPIX"],
+    "currency": "JPY",
+    "exchanges": ["Tokyo Stock Exchange"],
+    "market_cap": "Approx. $6 trillion",
+    "trading_sessions": {
+        "pre_market": {
+            "start": "08:00",
+            "end": "09:00",
+            "timezone": "JST",
+            "description": "Pre-opening"
+        },
+        "opening_auction": {
+            "start": "09:00",
+            "end": "09:00:30",
+            "timezone": "JST",
+            "description": "Opening auction"
+        },
+        "regular_session_morning": {
+            "start": "09:00",
+            "end": "11:30",
+            "timezone": "JST",
+            "description": "Morning session"
+        },
+        "breaks": [
+            {
+                "start": "11:30",
+                "end": "12:30",
+                "timezone": "JST",
+                "description": "Lunch break"
+            }
+        ],
+        "regular_session_afternoon": {
+            "start": "12:30",
+            "end": "15:00",
+            "timezone": "JST",
+            "description": "Afternoon session"
+        },
+        "closing_auction": {
+            "start": "15:00",
+            "end": "15:00:30",
+            "timezone": "JST",
+            "description": "Closing auction"
+        },
+        "after_market": null
+    }
+}
