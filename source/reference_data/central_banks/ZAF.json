@@ -1,0 +1,21 @@
+{
+    "country": "South Africa",
+    "central_bank": "South African Reserve Bank",
+    "currency": "ZAR",
+    "established": 1921,
+    "headquarters": "Pretoria",
+    "governor": "Lesetja Kganyago",
+    "title": "Governor",
+    "website": "www.resbank.co.za",
+    "monetary_policy": {
+        "primary_objective": "Price stability in the interest of balanced economic growth",
+        "inflation_target": "3-6%",
+        "policy_rate": "Repo Rate",
+        "decision_making_body": "Monetary Policy Committee"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "6 times per year",
+        "minutes_release": "2 weeks after meeting",
+        "economic_projections": "Bi-monthly"
+    }
+}

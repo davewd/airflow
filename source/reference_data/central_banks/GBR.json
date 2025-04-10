@@ -1,0 +1,21 @@
+{
+    "country": "United Kingdom",
+    "central_bank": "Bank of England",
+    "currency": "GBP",
+    "established": 1694,
+    "headquarters": "London",
+    "governor": "Andrew Bailey",
+    "title": "Governor",
+    "website": "www.bankofengland.co.uk",
+    "monetary_policy": {
+        "primary_objective": "Price stability and financial stability",
+        "inflation_target": "2%",
+        "policy_rate": "Bank Rate",
+        "decision_making_body": "Monetary Policy Committee"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "Same day as decision",
+        "economic_projections": "4 times per year"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "country": "Canada",
+    "central_bank": "Bank of Canada",
+    "currency": "CAD",
+    "established": 1934,
+    "headquarters": "Ottawa",
+    "governor": "Tiff Macklem",
+    "title": "Governor",
+    "website": "www.bankofcanada.ca",
+    "monetary_policy": {
+        "primary_objective": "Low, stable inflation and financial stability",
+        "inflation_target": "2% with control range of 1-3%",
+        "policy_rate": "Policy Interest Rate",
+        "decision_making_body": "Governing Council"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "2 weeks after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "country": "Türkiye",
+    "central_bank": "Central Bank of the Republic of Türkiye",
+    "currency": "TRY",
+    "established": 1931,
+    "headquarters": "Ankara",
+    "governor": "Fatih Karahan",
+    "title": "Governor",
+    "website": "www.tcmb.gov.tr/en",
+    "monetary_policy": {
+        "primary_objective": "Price stability",
+        "inflation_target": "5%",
+        "policy_rate": "One-Week Repo Rate",
+        "decision_making_body": "Monetary Policy Committee"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "Monthly",
+        "minutes_release": "5 working days after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

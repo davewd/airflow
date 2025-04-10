@@ -1,0 +1,21 @@
+{
+    "country": "United States",
+    "central_bank": "Federal Reserve System",
+    "currency": "USD",
+    "established": 1913,
+    "headquarters": "Washington, D.C.",
+    "governor": "Jerome Powell",
+    "title": "Chairman",
+    "website": "www.federalreserve.gov",
+    "monetary_policy": {
+        "primary_objective": "Maximum employment, stable prices, moderate long-term interest rates",
+        "inflation_target": "2% average over time",
+        "policy_rate": "Federal Funds Rate",
+        "decision_making_body": "Federal Open Market Committee (FOMC)"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "3 weeks after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

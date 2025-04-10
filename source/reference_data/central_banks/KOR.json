@@ -1,0 +1,21 @@
+{
+    "country": "South Korea",
+    "central_bank": "Bank of Korea",
+    "currency": "KRW",
+    "established": 1950,
+    "headquarters": "Seoul",
+    "governor": "Rhee Chang-yong",
+    "title": "Governor",
+    "website": "www.bok.or.kr/eng",
+    "monetary_policy": {
+        "primary_objective": "Price stability and financial stability",
+        "inflation_target": "2%",
+        "policy_rate": "Base Rate",
+        "decision_making_body": "Monetary Policy Board"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "2 weeks after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

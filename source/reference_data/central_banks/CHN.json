@@ -1,0 +1,21 @@
+{
+    "country": "China",
+    "central_bank": "People's Bank of China",
+    "currency": "CNY",
+    "established": 1948,
+    "headquarters": "Beijing",
+    "governor": "Pan Gongsheng",
+    "title": "Governor",
+    "website": "www.pbc.gov.cn/en",
+    "monetary_policy": {
+        "primary_objective": "Price stability, economic growth, and financial stability",
+        "inflation_target": "Around 3%",
+        "policy_rate": "Loan Prime Rate (LPR)",
+        "decision_making_body": "Monetary Policy Committee"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "Quarterly",
+        "minutes_release": "Not published",
+        "economic_projections": "Quarterly"
+    }
+}

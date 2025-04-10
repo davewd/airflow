@@ -1,0 +1,21 @@
+{
+    "country": "India",
+    "central_bank": "Reserve Bank of India",
+    "currency": "INR",
+    "established": 1935,
+    "headquarters": "Mumbai",
+    "governor": "Shaktikanta Das",
+    "title": "Governor",
+    "website": "www.rbi.org.in",
+    "monetary_policy": {
+        "primary_objective": "Price stability while keeping in mind objective of growth",
+        "inflation_target": "4% with tolerance band of 2-6%",
+        "policy_rate": "Repo Rate",
+        "decision_making_body": "Monetary Policy Committee"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "6 times per year",
+        "minutes_release": "2 weeks after meeting",
+        "economic_projections": "Bi-monthly"
+    }
+}

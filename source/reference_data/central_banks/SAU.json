@@ -1,0 +1,21 @@
+{
+    "country": "Saudi Arabia",
+    "central_bank": "Saudi Central Bank",
+    "currency": "SAR",
+    "established": 1952,
+    "headquarters": "Riyadh",
+    "governor": "Ayman Al-Sayari",
+    "title": "Governor",
+    "website": "www.sama.gov.sa/en-US",
+    "monetary_policy": {
+        "primary_objective": "Monetary stability and financial sector stability",
+        "inflation_target": "2%",
+        "policy_rate": "Repo Rate",
+        "decision_making_body": "Board of Directors"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "Not published",
+        "economic_projections": "Quarterly"
+    }
+}

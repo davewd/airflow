@@ -1,0 +1,21 @@
+{
+    "country": "Mexico",
+    "central_bank": "Bank of Mexico",
+    "currency": "MXN",
+    "established": 1925,
+    "headquarters": "Mexico City",
+    "governor": "Victoria Rodríguez Ceja",
+    "title": "Governor",
+    "website": "www.banxico.org.mx/en",
+    "monetary_policy": {
+        "primary_objective": "Price stability",
+        "inflation_target": "3% ± 1%",
+        "policy_rate": "Target Interest Rate",
+        "decision_making_body": "Governing Board"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "2 weeks after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "country": "European Union",
+    "central_bank": "European Central Bank",
+    "currency": "EUR",
+    "established": 1998,
+    "headquarters": "Frankfurt",
+    "governor": "Christine Lagarde",
+    "title": "President",
+    "website": "www.ecb.europa.eu",
+    "monetary_policy": {
+        "primary_objective": "Price stability",
+        "inflation_target": "2% over medium term",
+        "policy_rate": "Main refinancing operations rate",
+        "decision_making_body": "Governing Council"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "4 weeks after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "country": "New Zealand",
+    "central_bank": "Reserve Bank of New Zealand",
+    "currency": "NZD",
+    "established": 1934,
+    "headquarters": "Wellington",
+    "governor": "Adrian Orr",
+    "title": "Governor",
+    "website": "www.rbnz.govt.nz",
+    "monetary_policy": {
+        "primary_objective": "Price stability and maximum sustainable employment",
+        "inflation_target": "1-3% with a focus on 2%",
+        "policy_rate": "Official Cash Rate (OCR)",
+        "decision_making_body": "Monetary Policy Committee"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "7 times per year",
+        "minutes_release": "2 weeks after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

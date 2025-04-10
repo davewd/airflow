@@ -1,0 +1,21 @@
+{
+    "country": "Brazil",
+    "central_bank": "Central Bank of Brazil",
+    "currency": "BRL",
+    "established": 1964,
+    "headquarters": "Brasília",
+    "governor": "Roberto Campos Neto",
+    "title": "President",
+    "website": "www.bcb.gov.br",
+    "monetary_policy": {
+        "primary_objective": "Price stability and financial system stability",
+        "inflation_target": "3% with tolerance band of 1.5%",
+        "policy_rate": "Selic Rate",
+        "decision_making_body": "Monetary Policy Committee (COPOM)"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "8 times per year",
+        "minutes_release": "1 week after meeting",
+        "economic_projections": "4 times per year"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "country": "Argentina",
+    "central_bank": "Central Bank of Argentina",
+    "currency": "ARS",
+    "established": 1935,
+    "headquarters": "Buenos Aires",
+    "governor": "Santiago Bausili",
+    "title": "President",
+    "website": "www.bcra.gob.ar",
+    "monetary_policy": {
+        "primary_objective": "Monetary stability, financial stability, and economic development",
+        "inflation_target": "Not specified",
+        "policy_rate": "LELIQ Rate",
+        "decision_making_body": "Board of Directors"
+    },
+    "reporting": {
+        "monetary_policy_meetings": "Monthly",
+        "minutes_release": "Not published",
+        "economic_projections": "Quarterly"
+    }
+}
