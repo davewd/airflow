@@ -5,8 +5,13 @@ FROM python:3.13.2 AS base
 ENV DOCKER_CONTAINER=true
 ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VIRTUALENVS_CREATE=false
-ENV PYTHONVERBOSE=true
 RUN curl -sSL https://install.python-poetry.org | python3 -
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
 
 # Add Poetry to PATH
 ENV PATH="${POETRY_HOME}/bin:$PATH"
@@ -16,30 +21,26 @@ WORKDIR /app
 
 # Copy project files for dependency installation
 COPY pyproject.toml poetry.lock ./
+COPY jupyter_server_config.py ./
+COPY ipython_kernel_config.py /root/.ipython/profile_default/startup/
 
-RUN echo|pwd
-RUN echo|ls -R
+RUN echo | pwd
+RUN echo | ls -R
 
 # Install dependencies (without AI group since it's not compatible with Python 3.13)
-RUN poetry install --without ai --no-interaction
+RUN poetry install --without ai --with dev --no-interaction
 
 # Copy application code
 COPY ../../source/ source/
 COPY ../../airflow_dags/ airflow_dags/
 COPY ../../micap_infra/ micap_infra/
-ENV PYTHONPATH="${PYTHONPATH}:/app/source/micap_runtime/"
+ENV PYTHONPATH="/app/source/micap_runtime/"
 
-RUN echo|pwd
-RUN echo|ls -R
+RUN echo | pwd
+RUN echo | ls -R ..
 
 # forward request and error logs to docker log collector
 RUN ln -sf /proc/1/fd/1 /var/log/test.log
 
-FROM base AS debugger
-RUN poetry add debugpy
-ENTRYPOINT [ "poetry", "run", "python", "-m", "debugpy",  ]
-
-
-FROM base AS primary
-
-ENTRYPOINT [ "poetry", "run", "python", "-m" ]
+EXPOSE 8888
+ENTRYPOINT [ "poetry", "run", "jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--config", "/app/jupyter_server_config.py", "--NotebookApp.allow_origin='*'", "--NotebookApp.ip='0.0.0.0'" ]
