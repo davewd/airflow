@@ -6,23 +6,40 @@
       "label": "docker-build",
       "platform": "python",
       "dockerBuild": {
-          "tag": "micaprun_terminal:latest",
-          "dockerfile": "${workspaceFolder}/micap_infra/environment_runtime/Dockerfile_terminal",
-          "context": "${workspaceFolder}",
-          "pull": true,
-          "target": "debugger"
+        "tag": "micaprun_terminal:latest",
+        "dockerfile": "${workspaceFolder}/micap_infra/environment_runtime/Dockerfile_terminal",
+        "context": "${workspaceFolder}",
+        "remote": "/app",
+        "pull": true
       }
-  },
-  {
+    },
+    {
       "type": "docker-run",
       "label": "docker-run: debug",
-      "dependsOn": [
-          "docker-build"
-      ],
-      "python": {
-          "file": "${file}"
+      "dependsOn": ["docker-build"],
+      "dockerRun": {
+        "image": "micaprun_terminal:latest",
+        "containerName": "micaprun_terminal",
+        "remove": true,
+        "network": "micapnetwork",
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app"
+          }
+        ],
+        "ports": [
+          {
+            "containerPort": 8888,
+            "hostPort": 8888
+          }
+        ],
+        "env": {
+          "PYTHONUNBUFFERED": "1",
+          "PYTHONPATH": "/app"
+        }
       },
       "isBackground": true
-  }
+    }
   ]
 }

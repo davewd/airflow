@@ -3,36 +3,72 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
-  "configurations": [{
-        "name": "Python: Current File",
-        "type": "debugpy",
-        "request": "launch",
-        "program": "${file}",
-        "console": "integratedTerminal",
-        "justMyCode": true
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Docker Run",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "127.0.0.1",
+        "port": 50000
       },
-      {
-        "name": "Python: Docker Run",
-        "type": "debugpy",
-        "request": "attach",
-        "connect": {
-          "host": "127.0.0.1",
-          "port": 5678
-        },
-        "pathMappings": [{
+      "pathMappings": [
+        {
           "localRoot": "${workspaceFolder}",
           "remoteRoot": "."
-        }],
-        //"preLaunchTask": "docker-run: debug",
-        "module": "${relativeFileDirname}.${fileBasenameNoExtension}",
-        "pathMappings": [{
-          "localRoot": "${workspaceFolder}",
-          "remoteRoot": "."
-          "justMyCode": true,
-          "presentation": {
-            "hidden": false,
-            "group": "debug",
-            "order": 1
-          }
-        }]
+        }
+      ],
+      //"preLaunchTask": "docker-run: debug",
+      "logToFile": true,
+      "pythonArgs": [
+        "--jobModule",
+        "${relativeFileDirname}.${fileBasenameNoExtension}",
+        "--runDate",
+        "${input:shortDate}",
+        "--logLevel",
+        "INFO"
+      ],
+      "purpose": ["debug-in-terminal"],
+      "trace": true,
+      "logging": {
+        "engineLogging": true,
+        "traceResponse": true,
+        "programOutput": true
+      },
+      "justMyCode": true,
+      "presentation": {
+        "hidden": false,
+        "group": "debug",
+        "order": 1
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "shortDate",
+      "type": "command",
+      "command": "extension.commandvariable.dateTime",
+      "args": {
+        "locale": "en-US",
+        "options": {
+          "year": "numeric",
+          "month": "2-digit",
+          "day": "2-digit",
+          "hour12": false,
+          "hour": "2-digit",
+          "minute": "2-digit",
+          "second": "2-digit"
+        },
+        "template": "${year}-${month}-${day}"
+      }
+    }
+  ]
+}
