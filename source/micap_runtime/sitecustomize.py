@@ -11,8 +11,9 @@ def custom_import_hook():
     #import sys
     #sys.setdefaultencoding('utf-8')
 
-    import dynamic_import_lib
-    dynamic_import_lib.setup_micap_importing()
+
+    from dynamic_import_lib import setup_micap_importing
+    setup_micap_importing()
 
     # Example: Set up global logging
     import logging
@@ -24,10 +25,7 @@ def custom_import_hook():
     logger.info("Sitecustomize Logging Initiated")
     print("Sitecustomize Logging Initiated.")
     # Optionally inject a custom module into builtins
-    import builtins
 
-    import your_custom_module
-    builtins.custom_module = your_custom_module
 
 
 print("Sitecustomize script Starting...")
