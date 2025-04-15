@@ -199,7 +199,14 @@ Terminal 1: System Performance
 
 Terminal 2: Docker Compose
 
-1. cd "/Users/daviddawson/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/mi_capital"
-2. cd micap_infra/
-3. ./start_all_services.sh
-4. If req: chmod +x ./start_all_services.sh
+1. cd "/Users/daviddawson/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/mi_capital/micap_infra"
+2. ./start_all_services.sh
+3. If req: chmod +x ./start_all_services.sh
+
+## Kafka Connect
+
+- https://questdb.com/blog/realtime-crypto-tracker-with-questdb-kafka-connector/
+
+
+
+$ curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" --data @questdb-sink-btc.json http://localhost:8083/connectors
