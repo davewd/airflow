@@ -7,4 +7,4 @@ b = 3
 c = a + b
 print(f"{a} +  {b} is {c}")
 
-logger.info("Exitting")
+logger.info("Exiting")
