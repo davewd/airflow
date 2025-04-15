@@ -70,8 +70,10 @@ if __name__ == "__main__":
         type=str,
         required=True,
     )
-    parser.add_argument("--runDate", "-d", default=datetime.date(2024, 1, 1), type=str, required=True)
+    parser.add_argument("--runDate", "-d", default=datetime.date.today(), type=str, required=True)
     parser.add_argument("--logLevel", "-l", default="ERROR", type=str, required=False)
+
+    logger.info(f"Raw parser configuration: {vars(parser)}")
     args = parser.parse_args()
     main(args)
 
